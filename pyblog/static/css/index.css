@@ -1,0 +1,24 @@
+.technology-title:after {
+    position: absolute;
+    content: '';
+    border-bottom: 1px solid #eee;
+    width: 95px;
+    margin-left: 5px;
+    margin-top: 12px;
+}
+.technology-item .list-group-item {
+    border:None;
+}
+
+.article-list {
+    margin-top: 10px;
+}
+
+.article-list h5 {
+    border-bottom:1px solid #D6D6D6;
+    padding-bottom:.5rem!important;
+}
+
+section {
+    margin-top: 20px;
+}
