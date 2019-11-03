@@ -20,4 +20,5 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Index.as_view(), name='index'),
+    path('<int:slug>/', views.ArticleDetail.as_view(), name='detail'),
 ]

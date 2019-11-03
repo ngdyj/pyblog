@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load markdown %}
+<!--文章详情页-->
+
+{% block content %}
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Library</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Data</li>
+    </ol>
+  </nav>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="article-title">
+        <h1>文章标题</h1>
+      </div>
+      <div class="tag">
+        <span class="badge badge-primary">Primary</span>
+        <span class="badge badge-secondary">Secondary</span>
+        <span class="badge badge-success">Success</span>
+        <span class="badge badge-danger">Danger</span>
+        <span class="badge badge-warning">Warning</span>
+        <span class="badge badge-info">Info</span>
+        <span class="badge badge-light">Light</span>
+        <span class="badge badge-dark">Dark</span>
+      </div>
+
+      <div class="article-content">
+        <p>{{detail.content|markdown|safe }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 navigation-bar">
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
