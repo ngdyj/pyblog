@@ -26,6 +26,16 @@
                     some content
                 </div>
             </section>
+            {% for article in articles %}
+                <section>
+                    <a href="{% url 'detail' slug=article.id %}">
+                        <h4 class="article-title">{{ article.title}}</h4>
+                        <div>
+                            {{article.content|truncatechars:100}}
+                        </div>
+                    </a>
+                </section>
+            {% endfor %}
 
             <section>
                 <h4>Test</h4>

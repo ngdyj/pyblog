@@ -9,10 +9,8 @@ def index(request):
 
 class Index(generic.ListView):
     template_name = 'index.html'
-    context_object_name = 'home_article_list'
-
-    def get_queryset(self):
-        return {"test": "aaaaa"}
+    context_object_name = 'articles'
+    model = models.Article
 
 
 class ArticleDetail(generic.DetailView):

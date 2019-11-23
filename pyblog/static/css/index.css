@@ -22,3 +22,16 @@
 section {
     margin-top: 20px;
 }
+.article-list a {
+    color: #009a61;
+    text-decoration: none;
+}
+.article-title {
+    display: inline;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    color: #212121;
+    position: relative;
+    vertical-align: middle;
+}

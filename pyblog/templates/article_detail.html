@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="container">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Library</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Data</li>
-    </ol>
-  </nav>
+<!--  <nav aria-label="breadcrumb">-->
+<!--    <ol class="breadcrumb">-->
+<!--      <li class="breadcrumb-item"><a href="#">Home</a></li>-->
+<!--      <li class="breadcrumb-item"><a href="#">Library</a></li>-->
+<!--      <li class="breadcrumb-item active" aria-current="page">Data</li>-->
+<!--    </ol>-->
+<!--  </nav>-->
   <div class="row">
     <div class="col-md-9">
       <div class="article-title">
@@ -27,7 +27,7 @@
         <span class="badge badge-dark">Dark</span>
       </div>
 
-      <div class="article-content">
+      <div class="article-content markdown-body">
         <p>{{detail.content|markdown|safe }}</p>
       </div>
     </div>
