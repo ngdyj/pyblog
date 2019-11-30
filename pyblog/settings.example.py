@@ -124,7 +124,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# 如果不禁用，views.Archive的get_queryset()函数报错.待深读文档~
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
