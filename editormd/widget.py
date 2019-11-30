@@ -18,6 +18,7 @@ class TextInputMarkdown(widgets.Textarea):
             value = ''
 
         return mark_safe(render_to_string("editormd.html", {
+            "name": name,
             "body": value,
             "path": self.lib_path,
         }))
