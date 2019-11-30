@@ -15,13 +15,17 @@
             <div class="list-group">
                 {% categories as categories %}
                 {% for c in categories %}
-                <a href="#" class="list-group-item list-group-item-action">{{c.name|title}}</a>
+                <a href="{{request.path}}?category={{c.name}}" class="list-group-item list-group-item-action">{{c.name|title}}</a>
                 {% endfor %}
             </div>
         </div>
 
         <div class="col-md-7 article-list">
-            <h5>为你推荐</h5>
+            {% if request.GET.category %}
+                <h5>{{request.GET.category}}</h5>
+            {% else %}
+                <h5>为你推荐</h5>
+            {% endif %}
             {% for article in articles %}
                 <section>
                     <a href="{% url 'detail' slug=article.id %}">
@@ -31,6 +35,10 @@
                         </div>
                     </a>
                 </section>
+            {% empty %}
+                <div>
+                    暂无内容
+                </div>
             {% endfor %}
         </div>
         <div class="col-md-3">

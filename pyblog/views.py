@@ -12,6 +12,18 @@ class Index(generic.ListView):
     context_object_name = 'articles'
     model = models.Article
 
+    def get_queryset(self):
+        if "category" in self.request.GET:
+            category = self.request.GET['category']
+            content = models.Article.objects.select_related('category').filter(is_pub=True,
+                                                                               category__name=category).all()
+        else:
+            content = models.Article.objects.all()
+        return content
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
 
 class ArticleDetail(generic.DetailView):
     template_name = 'article_detail.html'
