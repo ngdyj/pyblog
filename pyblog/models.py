@@ -24,6 +24,8 @@ class Article(models.Model):
     content = models.TextField('内容')
     tags = models.ManyToManyField(Tag)
     category = models.ForeignKey(Category, verbose_name='分类', on_delete=False, null=True)
+    pub_date = models.DateTimeField(verbose_name="发布日期", auto_now_add=True)  # auto_now_add 创建时自动添加时间
+    mod_date = models.DateTimeField(verbose_name="更新日期", auto_now=True)      # auto_now 更新时,自动更新时间
 
     def __str__(self):
         return self.title

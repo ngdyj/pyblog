@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Index.as_view(), name='index'),
     path('p/<int:slug>/', views.ArticleDetail.as_view(), name='detail'),
+    path('archive', views.Archive.as_view(), name='archive'),
 ]

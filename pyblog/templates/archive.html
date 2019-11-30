@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="margin-top:20px;">
+    {% regroup articles  by pub_date.year as year_list %}
+    {% for year in year_list %}
+        <li>
+            <a class="badge badge-success" data-toggle="collapse" href="#archive-{{year.grouper}}" role="button" aria-expanded="false" aria-controls="archive-{{year.grouper}}">{{ year.grouper}}年</a>
+        </li>
+        <div class="collapse {% if forloop.first %}show{% endif %}" id="archive-{{year.grouper}}">
+            <ul>
+                {%regroup year.list by pub_date.month as month_list %}
+                <li>
+                    {% for month in month_list %}
+                    <a class="badge badge-secondary data-toggle="collapse" href="#archive-{{month.grouper}}" role="button" aria-expanded="false" aria-controls="archive-{{month.grouper}}">{{ month.grouper}}月 ({{month.list|length}})</a>
+                        <div class="collapse {% if forloop.first %}show{% endif %}" id="archive-{{month.grouper}}">
+                            <ul>
+                                {% for article in month.list %}
+                                <li><a class="badge badge-light" href="{% url 'detail' slug=article.id %}">{{article.title}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
