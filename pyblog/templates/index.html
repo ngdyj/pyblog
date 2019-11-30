@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pyblog %}
 
 {% block content %}
 <div class="jumbotron">
@@ -12,20 +13,15 @@
         <div class="col-md-2 technology-item">
             <h5 class="technology-title">技术频道</h5>
             <div class="list-group">
-              <a href="#" class="list-group-item list-group-item-action">Go</a>
-              <a href="#" class="list-group-item list-group-item-action">Python</a>
-              <a href="#" class="list-group-item list-group-item-action">运维</a>
+                {% categories as categories %}
+                {% for c in categories %}
+                <a href="#" class="list-group-item list-group-item-action">{{c.name|title}}</a>
+                {% endfor %}
             </div>
         </div>
 
         <div class="col-md-7 article-list">
             <h5>为你推荐</h5>
-            <section>
-                <h4>Test</h4>
-                <div>
-                    some content
-                </div>
-            </section>
             {% for article in articles %}
                 <section>
                     <a href="{% url 'detail' slug=article.id %}">
@@ -36,13 +32,6 @@
                     </a>
                 </section>
             {% endfor %}
-
-            <section>
-                <h4>Test</h4>
-                <div>
-                    some content
-                </div>
-            </section>
         </div>
         <div class="col-md-3">
 
