@@ -8,6 +8,10 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = '标签'
+        verbose_name_plural = '标签'
+
 
 class Category(models.Model):
     id = models.AutoField('ID', primary_key=True)
@@ -15,6 +19,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = '分类'
+        verbose_name_plural = '分类'
 
 
 class Article(models.Model):
@@ -29,6 +37,11 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        # https://docs.djangoproject.com/en/2.2/ref/models/options/
+        verbose_name = '文章'
+        verbose_name_plural = '文章'
 
 
 
