@@ -15,7 +15,7 @@ class Index(generic.ListView):
 
 class ArticleDetail(generic.DetailView):
     template_name = 'article_detail.html'
-    context_object_name = 'detail'
+    context_object_name = 'article'
     model = models.Article
     slug_field = 'id'
 
