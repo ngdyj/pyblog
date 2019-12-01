@@ -44,4 +44,27 @@ class Article(models.Model):
         verbose_name_plural = '文章'
 
 
+class Comment(models.Model):
+
+    id = models.AutoField('ID', primary_key=True)
+    nick = models.CharField(verbose_name='昵称', max_length=15)
+    content = models.CharField(verbose_name='评论内容', max_length=255)
+    email = models.CharField(verbose_name='邮箱', max_length=20)
+    ip = models.GenericIPAddressField(verbose_name='IP', null=True, blank=True)
+    article = models.ForeignKey(Article, verbose_name='评论的某文章', on_delete=True, related_name='comments')
+    parent = models.ForeignKey('self',
+                               verbose_name='父级评论id', on_delete=True, null=True, blank=True)
+    at = models.ForeignKey('self',
+                           verbose_name='@某评论', on_delete=True, null=True, blank=True, related_name='reply')
+    create_date = models.DateTimeField(verbose_name="评论时间", auto_now_add=True)
+
+    def __str__(self):
+        return '{0}-{1}'.format(self.id, self.nick)
+
+    class Meta:
+        verbose_name = '评论'
+        verbose_name_plural = '评论'
+
+
+
 

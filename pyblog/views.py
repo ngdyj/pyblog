@@ -33,7 +33,18 @@ class ArticleDetail(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['comments'] = self.get_comments()
         return context
+
+    def get_comments(self):
+        """
+        self.object queryset查询到的结果对象
+        :return:
+        """
+        from django.core.paginator import Paginator
+        one_level_comments = Paginator(self.object.comments.filter(parent__isnull=True).all()[:10], 1)
+        # one_level_comments = self.object.comments.filter(parent__isnull=True).all()[:10]
+        return one_level_comments
 
 
 class Archive(generic.ArchiveIndexView):
