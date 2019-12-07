@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class Tag(models.Model):
@@ -26,7 +27,7 @@ class Category(models.Model):
 
 
 class Article(models.Model):
-    id = models.AutoField('ID', primary_key=True)
+    id = models.UUIDField("ID", primary_key=True, default=uuid.uuid4, editable=False)
     is_pub = models.BooleanField('是否发布', null=False, blank=False)
     title = models.CharField('文章标题', max_length=255)
     content = models.TextField('内容')
