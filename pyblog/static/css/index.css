@@ -35,3 +35,7 @@ section {
     position: relative;
     vertical-align: middle;
 }
+
+.jumbotron {
+    background-color: #e8e5de;
+}

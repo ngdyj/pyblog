@@ -11,12 +11,13 @@
 <!--      <li class="breadcrumb-item active" aria-current="page">Data</li>-->
 <!--    </ol>-->
 <!--  </nav>-->
-  <div class="row">
+  <div class="row" style="margin-top:20px">
     <div class="col-md-9">
       <div class="article-title">
         <h1>{{article.title}}</h1>
       </div>
       <div class="tag">
+        <span class="badge">标签:</span>
         {% for tag in article.tags.all %}
           <span class="badge badge-info">{{tag}}</span>
         {% endfor %}
