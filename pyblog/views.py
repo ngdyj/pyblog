@@ -18,7 +18,7 @@ class Index(generic.ListView):
             content = models.Article.objects.select_related('category').filter(is_pub=True,
                                                                                category__name=category).all()
         else:
-            content = models.Article.objects.all()
+            content = models.Article.objects.filter(is_pub=True).all()
         return content
 
     def get(self, request, *args, **kwargs):
@@ -30,6 +30,10 @@ class ArticleDetail(generic.DetailView):
     context_object_name = 'article'
     model = models.Article
     slug_field = 'id'
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        return query.filter(is_pub=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
