@@ -41,6 +41,19 @@ INSTALLED_APPS = [
     'editormd',
 ]
 
+# 允许在模板中使用debug ex: {% if debug %}
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]
+
+"""
+设置为时True，如果请求URL与URLconf中的任何模式都不匹配，并且不以斜杠结尾，则将HTTP重定向发送到同一URL，并附加斜杠。
+请注意，重定向可能会导致POST请求中提交的所有数据丢失。
+必须启动了CommonMiddleware插件，该值才有效
+"""
+APPEND_SLASH = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
