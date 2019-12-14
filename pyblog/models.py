@@ -32,7 +32,7 @@ class Article(models.Model):
     title = models.CharField('文章标题', max_length=255)
     content = models.TextField('内容')
     tags = models.ManyToManyField(Tag)
-    category = models.ForeignKey(Category, verbose_name='分类', on_delete=False, null=True)
+    category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.CASCADE, null=True)
     pub_date = models.DateTimeField(verbose_name="发布日期", auto_now_add=True)  # auto_now_add 创建时自动添加时间
     mod_date = models.DateTimeField(verbose_name="更新日期", auto_now=True)      # auto_now 更新时,自动更新时间
 
@@ -52,11 +52,11 @@ class Comment(models.Model):
     content = models.CharField(verbose_name='评论内容', max_length=255)
     email = models.CharField(verbose_name='邮箱', max_length=20)
     ip = models.GenericIPAddressField(verbose_name='IP', null=True, blank=True)
-    article = models.ForeignKey(Article, verbose_name='评论的某文章', on_delete=True, related_name='comments')
+    article = models.ForeignKey(Article, verbose_name='评论的某文章', on_delete=models.CASCADE, related_name='comments')
     parent = models.ForeignKey('self',
-                               verbose_name='父级评论id', on_delete=True, null=True, blank=True)
+                               verbose_name='父级评论id', on_delete=models.CASCADE, null=True, blank=True)
     at = models.ForeignKey('self',
-                           verbose_name='@某评论', on_delete=True, null=True, blank=True, related_name='reply')
+                           verbose_name='@某评论', on_delete=models.CASCADE, null=True, blank=True, related_name='reply')
     create_date = models.DateTimeField(verbose_name="评论时间", auto_now_add=True)
 
     def __str__(self):
