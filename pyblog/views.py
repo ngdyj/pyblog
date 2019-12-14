@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
+from .settings import PAGESIZE
 from . import models
 
 
@@ -11,14 +12,15 @@ class Index(generic.ListView):
     template_name = 'index.html'
     context_object_name = 'articles'
     model = models.Article
+    paginate_by = PAGESIZE
 
     def get_queryset(self):
         if "category" in self.request.GET:
             category = self.request.GET['category']
             content = models.Article.objects.select_related('category').filter(is_pub=True,
-                                                                               category__name=category).all()
+                                                                               category__name=category).all().order_by('-pub_date')
         else:
-            content = models.Article.objects.filter(is_pub=True).all()
+            content = models.Article.objects.filter(is_pub=True).all().order_by('-pub_date')
         return content
 
     def get(self, request, *args, **kwargs):
