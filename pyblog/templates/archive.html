@@ -12,7 +12,7 @@
                 {%regroup year.list by pub_date.month as month_list %}
                 <li>
                     {% for month in month_list %}
-                    <a class="badge badge-secondary data-toggle="collapse" href="#archive-{{month.grouper}}" role="button" aria-expanded="false" aria-controls="archive-{{month.grouper}}">{{ month.grouper}}月 ({{month.list|length}})</a>
+                    <a class="badge badge-secondary" data-toggle="collapse" href="#archive-{{month.grouper}}" role="button" aria-expanded="false" aria-controls="archive-{{month.grouper}}">{{ month.grouper}}月 ({{month.list|length}})</a>
                         <div class="collapse {% if forloop.first %}show{% endif %}" id="archive-{{month.grouper}}">
                             <ul>
                                 {% for article in month.list %}

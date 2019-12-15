@@ -68,9 +68,10 @@ class Archive(generic.ArchiveIndexView):
     date_field = "pub_date"
     date_list_period = "month"
     model = models.Article
+    ordering = '-pub_date'
 
     def get_queryset(self):
-        content = super().get_queryset().values("id", "title", "pub_date")
+        content = super().get_queryset().values("id", "title", "pub_date").filter(is_pub=True)
         return content
 
     def get_context_data(self, *, object_list=None, **kwargs):
