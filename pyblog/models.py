@@ -60,7 +60,7 @@ class Comment(models.Model):
     create_date = models.DateTimeField(verbose_name="评论时间", auto_now_add=True)
 
     def __str__(self):
-        return '{0}-{1}'.format(self.id, self.nick)
+        return str(self.id)
 
     class Meta:
         verbose_name = '评论'

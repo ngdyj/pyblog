@@ -9,6 +9,7 @@ from .form import ArticleAdminForm
 class ArticleAdmin(admin.ModelAdmin):
     # https://timonweb.com/posts/override-field-widget-in-django-admin-form/
     form = ArticleAdminForm
+    list_display = ('title', 'pub_date')
 
 
 @admin.register(Tag)
@@ -23,5 +24,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'email', 'nick', 'content', 'parent')
+    list_per_page = 20  # 每页几条数据
+
 
