@@ -1,5 +1,6 @@
 from django import template
 from ..models import Category
+from ..settings import AVATAR_DOMAIN
 import hashlib
 
 register = template.Library()
@@ -14,5 +15,5 @@ def categories():
 # 根据Email生成头像地址
 @register.filter(name='gravatar')
 def gravatar(email, size=32):
-    return "https://gravatar.com/avatar/%s?s=%s&d=identicon" % (
-        hashlib.md5(email.lower().encode()).hexdigest(), str(size))
+    return "%s/avatar/%s?s=%s&d=retro" % (AVATAR_DOMAIN,
+                                          hashlib.md5(email.lower().encode()).hexdigest(), str(size))
