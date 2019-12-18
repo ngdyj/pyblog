@@ -51,3 +51,7 @@ section {
 .page-item.disabled .page-link {
     color: #d5dade;
 }
+
+.navbar {
+    background-color: #fff !important;
+}
