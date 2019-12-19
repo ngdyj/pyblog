@@ -62,4 +62,45 @@ $(document).ready(function(){
             });
         });
 
+        var has_next_page = true;
+        var next_page = 2;
+        var page_size = 10;
+        var article_uuid = $('#article-uuid').text()
+        $(window).scroll(function(){
+            if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                if (has_next_page) {
+                    $.ajax({
+                    type: 'get',
+                    url: `/comment/${article_uuid}/?page=${next_page}&size=${page_size}`,
+                    success: function(data, status) {
+                        if (data.code == 0) {
+                            has_next_page = data.data.has_next;
+                            next_page = data.data.has_next?next_page+1:next_page+0;
+                            var list = data.data.list;
+                            var comments = ''
+                            list.map(function(d){
+                                var comment = `<div class="media text-muted pt-3">
+                                              <img src="${d.avatar}" alt="..." class="mr-3">
+                                              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                                <div class="d-flex justify-content-between align-items-center w-100">
+                                                    <span class="d-block">${d.nick}</span>
+                                                    <small class="d-block text-right mt-3">
+                                                        <span>${d.create_date}</span>
+                                                        <a class="comment-reply " href="#">回复</a>
+                                                    </small>
+                                                </div>
+                                                <strong class="text-gray-dark">${d.content}</strong>
+                                              </div>
+                                            </div>`
+                                comments += comment
+                            });
+                            $("#comment").append(comments);
+                        }
+                    }
+                    });
+                }
+
+            }
+        });
+
 });

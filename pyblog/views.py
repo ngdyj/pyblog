@@ -104,14 +104,14 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
         }
         article = models.Article(id=kwargs.get('slug'))
         # https://docs.djangoproject.com/en/3.0/topics/pagination/
-        paginator = Paginator(article.comments.all().order_by('-create_date'), size)
+        paginator = Paginator(article.comments.all().order_by('-create_date'), int(size))
 
         comments = paginator.get_page(int(page))
         if not comments:
             return self.render_to_response(context=context)
         context['data'] = {
             'has_next': comments.has_next(),
-            'list': self.queryset_list_to_json(comments.object_list) if paginator.num_pages <= int(page) else [],
+            'list': self.queryset_list_to_json(comments.object_list) if int(page) <= paginator.num_pages else [],
         }
         return self.render_to_response(context=context)
 
@@ -172,8 +172,8 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
         return dic
 
 
-
 def gravatar(email, size=32):
     import hashlib
-    return "https://gravatar.com/avatar/%s?s=%s&d=identicon" % (
-        hashlib.md5(email.lower().encode()).hexdigest(), str(size))
+    from .settings import AVATAR_DOMAIN
+    return "%s/avatar/%s?s=%s&d=retro" % (AVATAR_DOMAIN,
+                                          hashlib.md5(email.lower().encode()).hexdigest(), str(size))
