@@ -147,6 +147,6 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 # 自定义
-PAGESIZE = 10
+PAGESIZE = 10  # 控制首页,每页的数量
 
 AVATAR_DOMAIN = 'https://gravatar.com'  # 头像地址,默认使用gravatar.com
