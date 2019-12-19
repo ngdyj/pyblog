@@ -5,6 +5,7 @@ from . import models, mixin, form
 from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.core import serializers
 from datetime import datetime
 
 
@@ -85,11 +86,34 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
+        from django.core.paginator import Paginator, QuerySetPaginator
+        page = request.GET.get('page', 2) if str(request.GET.get('page', 2)).isdigit() else 2
+        size = request.GET.get('size', 10) if str(request.GET.get('size', 10)).isdigit() else 10
+
+        # 设置size上限
+        if int(size) > 50:
+            size = 10
+
+        context = {
+            "code": 0,
+            "msg": "",
+            "data": {
+                "has_next": False,
+                "list": []
+            }
+        }
         article = models.Article(id=kwargs.get('slug'))
-        comments = article.comments.all()
+        # https://docs.djangoproject.com/en/3.0/topics/pagination/
+        paginator = Paginator(article.comments.all().order_by('-create_date'), size)
+
+        comments = paginator.get_page(int(page))
         if not comments:
-            return JsonResponse(data=[], safe=False)
-        return self.render_to_response(context=comments)
+            return self.render_to_response(context=context)
+        context['data'] = {
+            'has_next': comments.has_next(),
+            'list': self.queryset_list_to_json(comments.object_list) if paginator.num_pages <= int(page) else [],
+        }
+        return self.render_to_response(context=context)
 
     def post(self, request, *args, **kwargs):
         comment_form = form.CommentForm(request.POST)
@@ -125,6 +149,28 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         return self.render_to_json_response(context, **response_kwargs)
+
+    def queryset_list_to_json(self, queryset):
+        data = []
+        for q in queryset:
+            data.append(self.model_to_json(q))
+        return data
+
+    @staticmethod
+    def model_to_json(obj=models.Comment):
+        dic = {}
+        exclude = ('ip', 'article_id')
+        for key, value in obj.__dict__.items():
+            if str(key).startswith('_') or key in exclude:
+                continue
+            elif isinstance(value, datetime):
+                dic.setdefault(key, datetime.strftime(value, '%Y/%m/%d %H:%M'))
+            elif key == 'email':
+                dic.setdefault('avatar', gravatar(value))
+            else:
+                dic.setdefault(key, value)
+        return dic
+
 
 
 def gravatar(email, size=32):
