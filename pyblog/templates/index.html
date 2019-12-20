@@ -10,24 +10,14 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-2 technology-item">
-            <h5 class="technology-title">技术频道</h5>
-            <div class="list-group">
-                {% categories as categories %}
-                {% for c in categories %}
-                <a href="{{request.path}}?category={{c.name}}" class="list-group-item list-group-item-action">{{c.name|title}}</a>
-                {% endfor %}
-            </div>
-        </div>
-
         <div class="col-md-7 article-list">
             {% if request.GET.category %}
-                <h5>{{request.GET.category}}</h5>
+                <h4 class="pb-2 border-bottom">{{request.GET.category}}</h4>
             {% else %}
-                <h5>为你推荐</h5>
+                <h4 class="pb-2 border-bottom">为你推荐</h4>
             {% endif %}
             {% for article in articles %}
-                <section>
+                <section >
                     <a href="{% url 'detail' slug=article.id %}">
                         <h4 class="article-title">{{ article.title}}</h4>
                         <div>
@@ -43,8 +33,37 @@
 
             {% include 'page.html' %}
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 offset-md-2">
+            <div class="category">
+                <h4 class="pb-2 border-bottom">技术频道</h4>
+                <ul class="list-unstyled mb3">
+                    {% categories as categories %}
+                    {% for c in categories %}
+                    <li>
+                        <h6><a href="{{request.path}}?category={{c.name}}" title="{{c.name}}">{{c.name|title}}</a></h6>
+                    </li>
+                    {% endfor %}
 
+                </ul>
+            </div>
+            <div class="tags">
+                <h4 class="border-bottom pb-2">标签</h4>
+                <div class="tags">
+                {% tags as tags %}
+                {% for tag in tags %}
+                {% if forloop.counter0|mod:8 == 0 %}
+                    <a href="#" class="badge badge-primary">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 1%}<a href="#" class="badge badge-secondary">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 2%} <a href="#" class="badge badge-success">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 3%} <a href="#" class="badge badge-danger">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 4%} <a href="#" class="badge badge-warning">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 5%} <a href="#" class="badge badge-info">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 6%} <a href="#" class="badge badge-light">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 7%} <a href="#" class="badge badge-dark">{{tag.name|title}}</a>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </div>
