@@ -22,3 +22,13 @@ def tags():
 def gravatar(email, size=32):
     return "%s/avatar/%s?s=%s&d=retro" % (AVATAR_DOMAIN,
                                           hashlib.md5(email.lower().encode()).hexdigest(), str(size))
+
+
+@register.filter(name='mod')
+def mod(num, val):
+    # 取模运算
+    if str(num).isdigit() and str(val).isdigit():
+        if val == 0:
+            return 0
+        return num % val
+    return 0
