@@ -1,5 +1,5 @@
 from django import template
-from ..models import Category
+from ..models import Category, Tag
 from ..settings import AVATAR_DOMAIN
 import hashlib
 
@@ -10,6 +10,11 @@ register = template.Library()
 @register.simple_tag()
 def categories():
     return Category.objects.all()
+
+
+@register.simple_tag()
+def tags():
+    return Tag.objects.all()
 
 
 # 根据Email生成头像地址
