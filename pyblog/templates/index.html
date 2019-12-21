@@ -18,7 +18,7 @@
                     </a>
                     <div>
                         <span class="text-muted">{{article.pub_date|date:"Y/m/d H:i"}}</span> ·
-                        <span><a href="{{request.path}}?category={{c.name}}" title="{{c.name}}" class="text-decoration-none" style="color:#17a2b8">{{article.category.name}}</a> </span>
+                        <span><a href="{{request.path}}?category={{article.category.name}}" title="{{article.category.name}}" class="text-decoration-none" style="color:#17a2b8">{{article.category.name}}</a> </span>
                     </div>
                     <p>{{article.content|truncatechars:100}}</p>
                 </div>
