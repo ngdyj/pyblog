@@ -10,24 +10,21 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-7 article-list">
-            {% if request.GET.category %}
-                <h4 class="pb-2 border-bottom">{{request.GET.category}}</h4>
-            {% else %}
-                <h4 class="pb-2 border-bottom">为你推荐</h4>
-            {% endif %}
+        <div class="col-md-7 posts">
             {% for article in articles %}
-                <section >
-                    <a href="{% url 'detail' slug=article.id %}">
-                        <h4 class="article-title">{{ article.title}}</h4>
-                        <div>
-                            {{article.content|truncatechars:100}}
-                        </div>
+                <div class="border-bottom">
+                    <a href="{% url 'detail' slug=article.id %}" class="text-decoration-none">
+                            <h4>{{ article.title}}</h4>
                     </a>
-                </section>
+                    <div>
+                        <span class="text-muted">{{article.pub_date|date:"Y/m/d H:i"}}</span> ·
+                        <span><a href="{{request.path}}?category={{c.name}}" title="{{c.name}}" class="text-decoration-none" style="color:#17a2b8">{{article.category.name}}</a> </span>
+                    </div>
+                    <p>{{article.content|truncatechars:100}}</p>
+                </div>
             {% empty %}
-                <div>
-                    暂无内容
+                <div class="border-bottom">
+                    <a href="/" class="text-decoration-none"><h5>暂无内容</h5></a>
                 </div>
             {% endfor %}
 
@@ -55,14 +52,14 @@
                 {% tags as tags %}
                 {% for tag in tags %}
                 {% if forloop.counter0|mod:8 == 0 %}
-                    <a href="#" class="badge badge-primary">{{tag.name|title}}</a>
-                {% elif forloop.counter0|mod:8 == 1%}<a href="#" class="badge badge-secondary">{{tag.name|title}}</a>
-                {% elif forloop.counter0|mod:8 == 2%} <a href="#" class="badge badge-success">{{tag.name|title}}</a>
-                {% elif forloop.counter0|mod:8 == 3%} <a href="#" class="badge badge-danger">{{tag.name|title}}</a>
-                {% elif forloop.counter0|mod:8 == 4%} <a href="#" class="badge badge-warning">{{tag.name|title}}</a>
-                {% elif forloop.counter0|mod:8 == 5%} <a href="#" class="badge badge-info">{{tag.name|title}}</a>
-                {% elif forloop.counter0|mod:8 == 6%} <a href="#" class="badge badge-light">{{tag.name|title}}</a>
-                {% elif forloop.counter0|mod:8 == 7%} <a href="#" class="badge badge-dark">{{tag.name|title}}</a>
+                    <a href="{% url 'tag' name=tag.name %}" class="badge badge-primary">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 1%}<a href="{% url 'tag' name=tag.name %}" class="badge badge-secondary">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 2%} <a href="{% url 'tag' name=tag.name %}" class="badge badge-success">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 3%} <a href="{% url 'tag' name=tag.name %}" class="badge badge-danger">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 4%} <a href="{% url 'tag' name=tag.name %}" class="badge badge-warning">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 5%} <a href="{% url 'tag' name=tag.name %}" class="badge badge-info">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 6%} <a href="{% url 'tag' name=tag.name %}" class="badge badge-light">{{tag.name|title}}</a>
+                {% elif forloop.counter0|mod:8 == 7%} <a href="{% url 'tag' name=tag.name %}" class="badge badge-dark">{{tag.name|title}}</a>
                 {% endif %}
                 {% endfor %}
                 </div>
