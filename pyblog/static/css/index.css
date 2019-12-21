@@ -10,32 +10,6 @@
     border:None;
 }
 
-.article-list {
-    margin-top: 10px;
-}
-
-.article-list h5 {
-    border-bottom:1px solid #D6D6D6;
-    padding-bottom:.5rem!important;
-}
-
-section {
-    margin-top: 20px;
-}
-.article-list a {
-    color: #009a61;
-    text-decoration: none;
-}
-.article-title {
-    display: inline;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 28px;
-    color: #212121;
-    position: relative;
-    vertical-align: middle;
-}
-
 .jumbotron {
     background-color: #e8e5de;
 }
@@ -54,4 +28,7 @@ section {
 
 .navbar {
     background-color: #fff !important;
+}
+.posts a {
+    color: #9ebdde;
 }

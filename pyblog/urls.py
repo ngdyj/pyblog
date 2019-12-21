@@ -23,4 +23,5 @@ urlpatterns = [
     path('p/<uuid:slug>/', views.ArticleDetail.as_view(), name='detail'),
     path('archive', views.Archive.as_view(), name='archive'),
     path('comment/<uuid:slug>/', views.Comment.as_view(), name='comment'),
+    path('tag/<str:name>/', views.Tag.as_view(), name='tag'),
 ]

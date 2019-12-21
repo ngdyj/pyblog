@@ -172,6 +172,18 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
         return dic
 
 
+class Tag(generic.ListView):
+    template_name = 'tag.html'
+    context_object_name = 'articles'
+    paginate_by = 10
+    models = models.Article
+    ordering = '-pub_date'
+
+    def get_queryset(self):
+        content = models.Article.objects.filter(tags__name=self.kwargs.get('name'), is_pub=True).all()
+        return content
+
+
 def gravatar(email, size=32):
     import hashlib
     from .settings import AVATAR_DOMAIN
