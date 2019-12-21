@@ -1,4 +1,5 @@
 {% load pyblog %}
+{% load static %}
 <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h5 class="pb-2 mb-0">发表评论</h5>
     <p id="article-uuid" class="d-none">{{uuid}}</p>
@@ -45,3 +46,4 @@
 <!--      <a href="#">All suggestions</a>-->
 <!--    </small>-->
 </div>
+<script src="{% static 'js/comment.js' %}"></script>
