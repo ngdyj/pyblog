@@ -156,7 +156,8 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
     def queryset_list_to_json(self, queryset):
         data = []
         for q in queryset:
-            data.append(self.model_to_json(q))
+            reply = [self.model_to_json(r) for r in q.get_two_level_comments(q.id)]
+            data.append(dict(self.model_to_json(q), **{"reply": reply}))
         return data
 
     @staticmethod

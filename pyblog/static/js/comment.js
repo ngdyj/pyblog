@@ -62,6 +62,20 @@ $(document).ready(function(){
                             var list = data.data.list;
                             var comments = ''
                             list.map(function(d){
+                                var replies = "";
+                                d.reply.map(function(r){
+                                    var reply = `<div class="media text-muted pt-3" id="${r.id}">
+                                      <img src="${r.avatar}" alt="..." class="mr-3">
+                                      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                          <span class="d-block">${r.nick}: <strong class="text-gray-dark">${r.content}</strong></span>
+                                          <div class="rp">
+                                              <div class="time s-fc4">${r.create_date}}</div>
+                                              <a class="comment-reply" href="javascript:;"  data-to="${r.id}">回复</a>
+                                          </div>
+                                      </div>
+                                    </div>`
+                                    replies += reply;
+                                });
                                 var comment = `<div class="media text-muted pt-3" id="${d.id}">
                                               <img src="${d.avatar}" alt="..." class="mr-3">
                                               <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
@@ -70,6 +84,7 @@ $(document).ready(function(){
                                                 <div class="time s-fc4">${d.create_date}</div>
                                                 <a class="comment-reply" href="javascript:;" data-to="${d.id}">回复</a>
                                               </div>
+                                              ${replies}
                                               </div>
                                             </div>`
                                 comments += comment
