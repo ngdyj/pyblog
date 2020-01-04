@@ -32,3 +32,12 @@
 .posts a {
     color: #9ebdde;
 }
+
+.rp {
+    margin-top: 15px;
+    text-align: right;
+}
+.time {
+    float: left;
+    margin: 0 !important;
+}

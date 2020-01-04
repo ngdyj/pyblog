@@ -6,7 +6,7 @@
 <form method="POST" id="comment-form" style="margin-top: 10px;">
     {% csrf_token %}
     <input type="hidden" name="parent_id" value="">
-    <input type="hidden" name="to_id" value="">
+    <input type="hidden" name="at_id" value="">
     <div class="form-group">
         <label for="comment-email">邮箱</label>
         <input type="email" class="form-control" name="email" id="comment-email" aria-describedby="emailHelp">
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label>昵称</label>
-        <input type="text" class="form-control " name="nick" id="">
+        <input type="text" class="form-control " name="nick">
     </div>
     <div class="form-group">
         <textarea type="text" class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -26,24 +26,51 @@
 </form>
     <div class="border-top" id="comment" style="margin-top:20px">
     {% for comment in comments %}
-    <div class="media text-muted pt-3">
+    <div class="media text-muted pt-3" id="{{comment.id}}">
       <img src="{{comment.email|gravatar}}" alt="..." class="mr-3">
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <div class="d-flex justify-content-between align-items-center w-100">
-            <span class="d-block">{{comment.nick}}</span>
-            <small class="d-block text-right mt-3">
-                <span>{{comment.create_date|date:"Y/m/d H:i"}}</span>
-                <a class="comment-reply " href="#">回复</a>
-            </small>
-        </div>
-        <strong class="text-gray-dark">{{comment.content}}</strong>
+        <span class="d-block">{{comment.nick}}: <strong class="text-gray-dark">{{comment.content}}</strong></span>
+          <div class="rp">
+              <div class="time s-fc4">{{comment.create_date|date:"Y/m/d H:i"}}</div>
+              <a class="comment-reply" href="javascript:;"  data-to="{{comment.id}}">回复</a>
+          </div>
+        {% for r in comment.reply %}
+            <div class="media text-muted pt-3">
+              <img src="{{r.email|gravatar}}" alt="..." class="mr-3">
+              <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <span class="d-block">{{r.nick}}: <strong class="text-gray-dark">{{r.content}}</strong></span>
+                  <div class="rp">
+                      <div class="time s-fc4">{{r.create_date|date:"Y/m/d H:i"}}</div>
+                      <a class="comment-reply" href="javascript:;"  data-to="{{r.id}}">回复</a>
+                  </div>
+              </div>
+            </div>
+        {% endfor %}
       </div>
     </div>
     {% endfor %}
     </div>
-
-<!--    <small class="d-block text-right mt-3">-->
-<!--      <a href="#">All suggestions</a>-->
-<!--    </small>-->
 </div>
+
+<form method="POST" id="comment-reply-form" class="d-none text-left">
+    {% csrf_token %}
+    <input type="hidden" name="parent_id" value="">
+    <input type="hidden" name="at_id" value="">
+    <div class="form-group">
+        <label for="comment-email">邮箱</label>
+        <input type="email" class="form-control" name="email"  aria-describedby="emailHelp2">
+        <small id="emailHelp2" class="form-text text-muted">提示:您的邮箱不会被公开</small>
+    </div>
+    <div class="form-group">
+        <label>昵称</label>
+        <input type="text" class="form-control " name="nick">
+    </div>
+    <div class="form-group">
+        <textarea type="text" class="form-control" name="content"  rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <input type="hidden" name="id">
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm">评论</button>
+</form>
 <script src="{% static 'js/comment.js' %}"></script>

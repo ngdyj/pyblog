@@ -62,6 +62,20 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @staticmethod
+    def get_two_level_comments(parent_id, page=1, size=5):
+        """
+        :param parent_id: 一级评论的id
+        :param page:   int 第几页
+        :param size:   int 每页的大小
+        :return: [Comment]
+        """
+        page = page if isinstance(page, int) else 1
+        size = size if isinstance(size, int) else 5
+        page = page if page >= 1 else 1
+        size = size if size >= 1 else 5
+        return Comment.objects.filter(parent=parent_id).all().order_by('create_date')[(page - 1):size]
+
     class Meta:
         verbose_name = '评论'
         verbose_name_plural = '评论'

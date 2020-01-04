@@ -24,7 +24,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email', 'nick', 'content', 'parent')
+    list_display = ('id', 'email', 'nick', 'content', 'parent', 'at')
     list_per_page = 20  # 每页几条数据
 
 

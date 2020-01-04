@@ -16,6 +16,6 @@ class ArticleAdminForm(ModelForm):
 class CommentForm(forms.Form):
     email = forms.EmailField(label='email', max_length=100,)
     nick = forms.CharField(label='nick', max_length=20)
-    parent_id = forms.IntegerField(label='parent_id', max_value=50, required=False)
-    at_id = forms.IntegerField(label='at_id', max_value=50, required=False)
+    parent_id = forms.IntegerField(label='parent_id', required=False)
+    at_id = forms.IntegerField(label='at_id', required=False)
     content = forms.CharField(label='content', max_length=50)

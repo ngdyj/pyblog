@@ -54,9 +54,11 @@ class ArticleDetail(generic.DetailView):
         :return:
         """
         from django.core.paginator import Paginator
+        comments = []
         one_level_comments = self.object.comments.filter(parent__isnull=True).all().order_by('-create_date')[:10]
-        # one_level_comments = self.object.comments.filter(parent__isnull=True).all()[:10]
-        return one_level_comments
+        for c in one_level_comments:
+            comments.append(dict(c.__dict__, **{"reply": c.get_two_level_comments(c.id)}))
+        return comments
 
 
 class Archive(generic.ArchiveIndexView):
@@ -127,8 +129,8 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
                                      email=comment_form.cleaned_data['email'],
                                      nick=comment_form.cleaned_data['nick'],
                                      content=comment_form.cleaned_data['content'],
-                                     parent=comment_form.cleaned_data['parent_id'],
-                                     at=comment_form.cleaned_data['at_id'],
+                                     parent_id=comment_form.cleaned_data['parent_id'],
+                                     at_id=comment_form.cleaned_data['at_id'],
                                      ip=self.request.META['REMOTE_ADDR']
                                      )
             try:
@@ -138,6 +140,7 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
                     "avatar": gravatar(comment.email),
                     "nick": comment.nick,
                     "content": comment.content,
+                    "parent_id": comment.parent_id,
                     "create_date": datetime.strftime(comment.create_date, "%Y/%m/%d %H:%M"),
                 }
             except Exception as e:
