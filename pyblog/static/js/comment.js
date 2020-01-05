@@ -1,26 +1,12 @@
 $(document).ready(function(){
         $("#comment-form").submit(function(e){
             e.preventDefault();
-            var form= {
-                email:'input[name="email"]',
-                content:'textarea[name="content"]',
-                parent_id:'input[name="parent_id"]',
-                at_id:'input[name="at_id"]',
-            };
-            data = {
-                email:$(form.email).val(),
-                content:$(form.content).val(),
-                source_id:"1",
-                parent_id:$(form.parent_id).val(),
-                at_id:$(form.at_id).val(),
-            };
             var article_uuid = $('#article-uuid').text()
             $.ajax({
                 type: "POST",
                 url: `/comment/${article_uuid}/`,
                 data: $("#comment-form").serialize(),
                 success: function(data, status,jqXHR){
-                    console.log(data,status)
                     if (data.code == 0){ //评论成功
                     var comment = `<div class="media text-muted pt-3 " id="${data.data.id}">
                       <img src="${data.data.avatar}" class="mr-3" alt="...">
@@ -69,7 +55,7 @@ $(document).ready(function(){
                                       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                                           <span class="d-block">${r.nick}: <strong class="text-gray-dark">${r.content}</strong></span>
                                           <div class="rp">
-                                              <div class="time s-fc4">${r.create_date}}</div>
+                                              <div class="time s-fc4">${r.create_date}</div>
                                               <a class="comment-reply" href="javascript:;"  data-to="${r.id}">回复</a>
                                           </div>
                                       </div>
@@ -106,7 +92,6 @@ $(document).ready(function(){
             } else {
                 parent_id = $(this).parent().parent().parent().parent().parent().attr("id");
             }
-            console.log(parent_id, at_id);
             var reply = $("#comment-reply-form");
             $("#comment-reply-form input[name=parent_id]").val(parent_id);
             $("#comment-reply-form input[name=at_id]").val(at_id);
