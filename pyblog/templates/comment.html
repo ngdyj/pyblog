@@ -3,6 +3,7 @@
 <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h5 class="pb-2 mb-0">发表评论</h5>
     <p id="article-uuid" class="d-none">{{uuid}}</p>
+    <p id="comment_count" class="d-none">{{comments.count}}</p>
 <form method="POST" id="comment-form" style="margin-top: 10px;">
     {% csrf_token %}
     <input type="hidden" name="parent_id" value="">
@@ -25,7 +26,7 @@
     <button type="submit" class="btn btn-primary btn-sm">评论</button>
 </form>
     <div class="border-top" id="comment" style="margin-top:20px">
-    {% for comment in comments %}
+    {% for comment in comments.data %}
     <div class="media text-muted pt-3" id="{{comment.id}}">
       <img src="{{comment.email|gravatar}}" alt="..." class="mr-3">
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">

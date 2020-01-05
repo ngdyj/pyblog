@@ -54,10 +54,18 @@ class ArticleDetail(generic.DetailView):
         :return:
         """
         from django.core.paginator import Paginator
-        comments = []
-        one_level_comments = self.object.comments.filter(parent__isnull=True).all().order_by('-create_date')[:10]
+        from django.db.models import Count
+        comments = {"count": 0, "data": []}
+        comment_count = self.object.comments.filter(
+            parent__isnull=True).order_by('create_date').aggregate(Count('id')).get("id__count", 0)
+        comments.update({
+            "count": comment_count,
+        })
+        one_level_comments = self.object.comments.filter(
+            parent__isnull=True).all().order_by(
+            'create_date')[0 if (comment_count-10) < 0 else comment_count-10:comment_count]
         for c in one_level_comments:
-            comments.append(dict(c.__dict__, **{"reply": c.get_two_level_comments(c.id)}))
+            comments.get("data").append(dict(c.__dict__, **{"reply": c.get_two_level_comments(c.id)}))
         return comments
 
 
@@ -91,10 +99,29 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
         from django.core.paginator import Paginator, QuerySetPaginator
         page = request.GET.get('page', 2) if str(request.GET.get('page', 2)).isdigit() else 2
         size = request.GET.get('size', 10) if str(request.GET.get('size', 10)).isdigit() else 10
+        _count = request.GET.get('count', 0) if str(request.GET.get('count', 0)).isdigit() else 0
+        article_id = self.kwargs.get("slug")
 
+        if int(page) <= 0:
+            page = 1
+        page = int(page)
         # 设置size上限
         if int(size) > 50:
             size = 10
+        size = int(size)
+        """
+        反向分页, 如: 数据库查询的数据,按时间升序。前端获取的数据是降序，即第一条应该是最新的。
+        如果使用降序分页查询，此时如果数据库又有新数据，会导致下一页可能包含上一页的重复数据。
+        逆向思维:
+            数据库按时间升序查询，分页反向。
+            假设数据库有15条数据，每页为5条。
+            1.按降序查询的话，最新的5条数据应该是第一页。
+            2.按升序查询的话，最新的5条数据应该是第三页。
+        """
+        import math
+        page_count = math.ceil(int(_count) / int(page))
+        m = page_count + 1
+        page = m - int(page)
 
         context = {
             "code": 0,
@@ -104,15 +131,17 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
                 "list": []
             }
         }
+        if page < 1:
+            return self.render_to_response(context=context)
         article = models.Article(id=kwargs.get('slug'))
         # https://docs.djangoproject.com/en/3.0/topics/pagination/
-        paginator = Paginator(article.comments.all().order_by('-create_date'), int(size))
+        paginator = Paginator(article.comments.filter(article_id=article_id).all().order_by('create_date'), int(size))
 
         comments = paginator.get_page(int(page))
         if not comments:
             return self.render_to_response(context=context)
         context['data'] = {
-            'has_next': comments.has_next(),
+            'has_next': comments.has_next() if comments.object_list.__len__() > size else False,
             'list': self.queryset_list_to_json(comments.object_list) if int(page) <= paginator.num_pages else [],
         }
         return self.render_to_response(context=context)

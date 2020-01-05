@@ -35,12 +35,13 @@ $(document).ready(function(){
         var next_page = 2;
         var page_size = 10;
         var article_uuid = $('#article-uuid').text()
+        var comment_count = $('#comment_count').text()
         $(window).scroll(function(){
             if($(window).scrollTop() == $(document).height() - $(window).height()) {
                 if (has_next_page) {
                     $.ajax({
                     type: 'get',
-                    url: `/comment/${article_uuid}/?page=${next_page}&size=${page_size}`,
+                    url: `/comment/${article_uuid}/?page=${next_page}&size=${page_size}&count=${comment_count}`,
                     success: function(data, status) {
                         if (data.code == 0) {
                             has_next_page = data.data.has_next;
