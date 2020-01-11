@@ -13,9 +13,10 @@
 <!--  </nav>-->
   <div class="row" style="margin-top:20px">
     <div class="col-md-9">
-      <div class="article-title">
-        <h1>{{article.title}}</h1>
-      </div>
+      <header class="blog-post-header">
+        <h2 class="title mb-2">{{article.title}}</h2>
+        <div class="meta mb-3"><span class="date">Published 3 months ago</span><span class="time">5 min read</span><span class="comment"><a href="#">4 comments</a></span></div>
+      </header>
       <div class="tag">
         <span class="badge">标签:</span>
         {% for tag in article.tags.all %}
@@ -23,7 +24,7 @@
         {% endfor %}
       </div>
 
-      <div class="article-content markdown-body">
+      <div class="article-content markdown-body blog-post-body">
         <p>{{article.content|markdown|safe }}</p>
       </div>
       {% include 'comment.html' %}
