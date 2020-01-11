@@ -113,3 +113,46 @@ a {
     text-decoration: none;
     background-color: transparent;
 }
+
+
+.header {
+    background: #077CBC;
+    height: 200px;
+}
+
+
+.sps {
+    background-color: #077CBC;
+    color: #fff;
+    padding: 1em .5em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.25s ease;
+    width: 100%;
+}
+
+#menu {
+    background-color: #077CBC !important;
+}
+
+#menu li a {
+    padding: 17px 19px 14px 15px;
+    float: left;
+    font-weight: 600
+}
+#menu a {
+    color: #fff;
+    font-weight: 600;
+}
+
+#menu li.active a {
+    background: transparent !important;
+    color: #fff;
+    cursor: default;
+    border-bottom: 4px solid #fff
+}
+#menu li a:hover {
+    background: rgba(0,0,0,0.17) !important;
+    border-bottom: 4px solid #fff
+}

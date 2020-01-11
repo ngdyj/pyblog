@@ -4,7 +4,12 @@ $(document).ready(function(){
                 $('#back-to-top').fadeIn();
             } else {
                 $('#back-to-top').fadeOut();
-            }
+            };
+            if ($(window).scrollTop() == $("header").height() || $(window).scrollTop() >= $("header").height()) {
+             $('#menu').addClass('sps');
+            } else {
+                $('#menu').removeClass('sps');
+            };
         });
         // scroll body to 0px on click
         $('#back-to-top').click(function () {
@@ -13,4 +18,5 @@ $(document).ready(function(){
             }, 800);
             return false;
         });
+
 });
