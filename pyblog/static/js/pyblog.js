@@ -18,5 +18,9 @@ $(document).ready(function(){
             }, 600);
             return false;
         });
+        $( '#navbars-blog a' ).on('click', function () {
+            $('#navbars-blog').find('li.active').removeClass('active');
+            $(this).parent('li').addClass('active');
+        });
 
 });
