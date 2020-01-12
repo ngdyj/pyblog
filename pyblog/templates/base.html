@@ -1,6 +1,6 @@
 <!doctype html>
 {% load static %}
-<html>
+<html class="h-100">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -29,12 +29,12 @@
 
     <title>向着太阳奋斗</title>
   </head>
-  <body>
+  <body class="d-flex flex-column h-100 vsc-initialized">
   {% include 'common/header.html' %}
-  <div class="main container">
+  <main class="main container">
     {% block content %}
     {% endblock %}
-  </div>
+  </main>
     <script src="{% static 'js/pyblog.js' %}" ></script>
   {% include 'common/footer.html' %}
   </body>
