@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from django.db.models import Count
+from django.db.models import Count, Q
 from .settings import PAGESIZE
 from . import models, mixin, form
 from django.http.response import JsonResponse
@@ -25,14 +25,15 @@ class Index(generic.ListView):
             category = self.request.GET['category']
 
             """
-            Count('comments') 统计有几条评论,并写入自定义字段num_comment中
+            Count('comments') 统计有几条评论(仅统计一级评论数量),并写入自定义字段num_comment中
             """
             content = models.Article.objects.\
-                select_related('category').annotate(num_comment=Count('comments')).\
+                select_related('category').annotate(
+                 num_comment=Count('comments', filter=Q(comments__parent__isnull=True))).\
                 filter(is_pub=True, category__name=category).all().order_by('-pub_date')
         else:
             content = models.Article.objects.\
-                annotate(num_comment=Count('comments')).\
+                annotate(num_comment=Count('comments', filter=Q(comments__parent__isnull=True))).\
                 filter(is_pub=True).all().order_by('-pub_date')
         return content
 
@@ -48,7 +49,7 @@ class ArticleDetail(generic.DetailView):
 
     def get_queryset(self):
         query = super().get_queryset()
-        return query.annotate(num_comment=Count('comments')).filter(is_pub=True)
+        return query.annotate(num_comment=Count('comments', filter=Q(comments__parent__isnull=True))).filter(is_pub=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,14 +65,13 @@ class ArticleDetail(generic.DetailView):
         from django.core.paginator import Paginator
         from django.db.models import Count
         comments = {"count": 0, "data": []}
-        comment_count = self.object.comments.filter(
-            parent__isnull=True).order_by('create_date').aggregate(Count('id')).get("id__count", 0)
+        comment_count = self.object.comments.filter(parent__isnull=True).aggregate(Count('id')).get("id__count", 0)
         comments.update({
             "count": comment_count,
         })
         one_level_comments = self.object.comments.filter(
             parent__isnull=True).all().order_by(
-            'create_date')[0 if (comment_count-10) < 0 else comment_count-10:comment_count]
+            '-create_date')[0 if (comment_count-10) < 0 else comment_count-10:comment_count]
         for c in one_level_comments:
             comments.get("data").append(dict(c.__dict__, **{"reply": c.get_two_level_comments(c.id)}))
         return comments
@@ -127,7 +127,7 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
             2.按升序查询的话，最新的5条数据应该是第三页。
         """
         import math
-        page_count = math.ceil(int(_count) / int(page))
+        page_count = math.ceil(int(_count) / int(size))
         m = page_count + 1
         page = m - int(page)
 
@@ -143,9 +143,9 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
             return self.render_to_response(context=context)
         article = models.Article(id=kwargs.get('slug'))
         # https://docs.djangoproject.com/en/3.0/topics/pagination/
-        paginator = Paginator(article.comments.filter(article_id=article_id).all().order_by('create_date'), int(size))
+        paginator = Paginator(article.comments.filter(article_id=article_id, parent__isnull=True).all().order_by('create_date'), int(size))
 
-        comments = paginator.get_page(int(page))
+        comments = paginator.get_page(int(page_count - page))
         if not comments:
             return self.render_to_response(context=context)
         context['data'] = {
