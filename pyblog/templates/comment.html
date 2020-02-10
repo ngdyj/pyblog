@@ -30,7 +30,10 @@
     <div class="media text-muted pt-3 small" id="{{comment.id}}">
       <img src="{{comment.email|gravatar}}" alt="..." class="mr-3">
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <span class="d-block nick">{{comment.nick}}: <strong class="text-gray-dark">{{comment.content}}</strong></span>
+          <div class="small">
+              <span class="text-primary">{{comment.nick}}: </span>
+              <strong class="text-gray-dark">{{comment.content}}</strong>
+          </div>
           <div class="rp">
               <div class="time s-fc4">{{comment.create_date|date:"Y/m/d H:i"}}</div>
               <a class="comment-reply" href="javascript:;"  data-to="{{comment.id}}">回复</a>
