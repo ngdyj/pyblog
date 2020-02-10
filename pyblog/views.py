@@ -71,7 +71,7 @@ class ArticleDetail(generic.DetailView):
         })
         one_level_comments = self.object.comments.filter(
             parent__isnull=True).all().order_by(
-            '-create_date')[0 if (comment_count-10) < 0 else comment_count-10:comment_count]
+            '-create_date')[0:comment_count if (comment_count-10) < 0 else comment_count-10]
         for c in one_level_comments:
             comments.get("data").append(dict(c.__dict__, **{"reply": c.get_two_level_comments(c.id)}))
         return comments
@@ -150,7 +150,7 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
             return self.render_to_response(context=context)
         context['data'] = {
             'has_next': comments.has_next() if comments.object_list.__len__() > size else False,
-            'list': self.queryset_list_to_json(comments.object_list) if int(page) <= paginator.num_pages else [],
+            'list': self.queryset_list_to_json(comments.object_list)[::-1] if int(page) <= paginator.num_pages else [],
         }
         return self.render_to_response(context=context)
 
