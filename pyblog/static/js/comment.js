@@ -11,8 +11,10 @@ $(document).ready(function(){
                     var comment = `<div class="media text-muted pt-3 " id="${data.data.id}">
                       <img src="${data.data.avatar}" class="mr-3" alt="...">
                       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                        <span class="d-block">${data.data.nick}: <strong class="text-gray-dark">${data.data.content}</strong>
-                        </span>
+                        <div class="small">
+                          <span class="text-primary">${data.data.nick}:</span>
+                          <strong class="text-gray-dark">${data.data.content}</strong>
+                        </div>
                         <div class="rp">
                             <div class="time s-fc4">刚刚</div>
                             <a class="comment-reply " href="javascript:;" data-to="${data.data.id}">回复</a>
@@ -70,7 +72,10 @@ $(document).ready(function(){
                                 var comment = `<div class="media text-muted pt-3" id="${d.id}">
                                               <img src="${d.avatar}" alt="..." class="mr-3">
                                               <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                              <span class="d-block">${d.nick}: <strong class="text-gray-dark">${d.content}</strong></span>
+                                              <div class="small">
+                                                  <span class="text-primary">${d.nick}: </span>
+                                                  <strong class="text-gray-dark">${d.content}</strong>
+                                              </div>
                                               <div class="rp">
                                                 <div class="time s-fc4">${d.create_date}</div>
                                                 <a class="comment-reply" href="javascript:;" data-to="${d.id}">回复</a>
@@ -121,8 +126,10 @@ $(document).ready(function(){
                     var comment = `<div class="media text-muted pt-3" id="${data.data.id}">
                       <img src="${data.data.avatar}" class="mr-3" alt="...">
                       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                        <span class="d-block">${data.data.nick}: <strong class="text-gray-dark">${data.data.content}</strong>
-                        </span>
+                        <div class="small">
+                          <span class="text-primary">${data.data.nick}: </span>
+                          <strong class="text-gray-dark">${data.data.content}</strong>
+                        </div>
                         <div class="rp">
                             <div class="time s-fc4">刚刚</div>
                             <a class="comment-reply" href="javascript:;" data-to="${data.data.id}">回复</a>
