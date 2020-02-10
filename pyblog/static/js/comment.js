@@ -54,7 +54,11 @@ $(document).ready(function(){
                                     var reply = `<div class="media text-muted pt-3" id="${r.id}">
                                       <img src="${r.avatar}" alt="..." class="mr-3">
                                       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                          <span class="d-block">${r.nick}: <strong class="text-gray-dark">${r.content}</strong></span>
+                                          <div class="small">
+                                                  <span class="text-primary">${r.nick}</span>
+                                                  <span>回复</span> <span class="text-primary">${r.at__nick}</span>:
+                                                  <strong class="text-gray-dark">${r.content}</strong>
+                                          </div>
                                           <div class="rp">
                                               <div class="time s-fc4">${r.create_date}</div>
                                               <a class="comment-reply" href="javascript:;"  data-to="${r.id}">回复</a>

@@ -74,7 +74,9 @@ class Comment(models.Model):
         size = size if isinstance(size, int) else 5
         page = page if page >= 1 else 1
         size = size if size >= 1 else 5
-        return Comment.objects.filter(parent=parent_id).all().order_by('create_date')[(page - 1):size]
+        return Comment.objects.select_related('at').values(
+            "id", "nick", "content", "email", "create_date", "at__nick"
+        ).filter(parent=parent_id).all().order_by('create_date')[(page - 1):size]
 
     class Meta:
         verbose_name = '评论'

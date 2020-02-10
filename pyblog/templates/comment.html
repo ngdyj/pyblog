@@ -30,7 +30,7 @@
     <div class="media text-muted pt-3 small" id="{{comment.id}}">
       <img src="{{comment.email|gravatar}}" alt="..." class="mr-3">
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <span class="d-block">{{comment.nick}}: <strong class="text-gray-dark">{{comment.content}}</strong></span>
+        <span class="d-block nick">{{comment.nick}}: <strong class="text-gray-dark">{{comment.content}}</strong></span>
           <div class="rp">
               <div class="time s-fc4">{{comment.create_date|date:"Y/m/d H:i"}}</div>
               <a class="comment-reply" href="javascript:;"  data-to="{{comment.id}}">回复</a>
@@ -39,7 +39,11 @@
             <div class="media text-muted pt-3 small">
               <img src="{{r.email|gravatar}}" alt="..." class="mr-3">
               <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                  <span class="d-block">{{r.nick}}: <strong class="text-gray-dark">{{r.content}}</strong></span>
+                  <div class="small">
+                      <span class="text-primary">{{r.nick}}</span>
+                      <span>{% if r.at__nick != null %}回复</span> <span class="text-primary">{{ r.at__nick }}</span>{% endif %}:
+                      <strong class="text-gray-dark">{{r.content}}</strong>
+                  </div>
                   <div class="rp">
                       <div class="time s-fc4">{{r.create_date|date:"Y/m/d H:i"}}</div>
                       <a class="comment-reply" href="javascript:;"  data-to="{{r.id}}">回复</a>

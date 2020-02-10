@@ -73,7 +73,8 @@ class ArticleDetail(generic.DetailView):
             parent__isnull=True).all().order_by(
             '-create_date')[0:comment_count if (comment_count-10) < 0 else comment_count-10]
         for c in one_level_comments:
-            comments.get("data").append(dict(c.__dict__, **{"reply": c.get_two_level_comments(c.id)}))
+            comments.get("data").append(
+                dict(c.__dict__, **{"reply": [Comment.model_to_json(r) for r in c.get_two_level_comments(c.id)]}))
         return comments
 
 
@@ -201,7 +202,14 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
     def model_to_json(obj=models.Comment):
         dic = {}
         exclude = ('ip', 'article_id')
-        for key, value in obj.__dict__.items():
+        items = {}
+        if isinstance(obj, dict):
+            items = obj.items()
+        elif isinstance(obj, models.Comment):
+            items = obj.__dict__.items()
+        else:
+            return dic
+        for key, value in items:
             if str(key).startswith('_') or key in exclude:
                 continue
             elif isinstance(value, datetime):
