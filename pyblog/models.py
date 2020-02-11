@@ -74,7 +74,7 @@ class Comment(models.Model):
         size = size if isinstance(size, int) else None
         page = page if page >= 1 else 1
         return Comment.objects.select_related('at').values(
-            "id", "nick", "content", "email", "create_date", "at__nick"
+            "id", "nick", "content", "email", "create_date", "at__nick", "at__id", "parent_id"
         ).filter(parent=parent_id).all().order_by('create_date')[(page - 1):size]
 
     class Meta:

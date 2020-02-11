@@ -53,12 +53,16 @@ $(document).ready(function(){
                             list.map(function(d){
                                 var replies = "";
                                 d.reply.map(function(r){
+                                    var tmp = ``;
+                                    if (r.at__id != r.parent_id) {
+                                        tmp = `<span>回复</span> <span class="text-primary">${r.at__nick}</span>`
+                                    }
                                     var reply = `<div class="media text-muted pt-3" id="${r.id}">
                                       <img src="${r.avatar}" alt="..." class="mr-3">
                                       <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
                                           <div>
                                                   <span class="text-primary">${r.nick}</span>
-                                                  <span>回复</span> <span class="text-primary">${r.at__nick}</span>:
+                                                  ${tmp}:
                                                   <strong class="text-gray-dark">${r.content}</strong>
                                           </div>
                                           <div class="rp">

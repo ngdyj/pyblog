@@ -40,11 +40,11 @@
           </div>
         {% for r in comment.reply %}
             <div class="media text-muted pt-3">
-              <img src="{{r.email|gravatar}}" alt="..." class="mr-3">
+              <img src="{{r.avatar}}" alt="..." class="mr-3">
               <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
                   <div>
                       <span class="text-primary">{{r.nick}}</span>
-                      <span>{% if forloop.first is not True %}回复</span> <span class="text-primary">{{ r.at__nick }}</span>{% endif %}:
+                      <span>{% if r.at__id != r.parent_id %}回复</span> <span class="text-primary">{{ r.at__nick }}</span>{% endif %}:
                       <strong class="text-gray-dark">{{r.content}}</strong>
                   </div>
                   <div class="rp">
