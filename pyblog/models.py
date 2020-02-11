@@ -63,7 +63,7 @@ class Comment(models.Model):
         return str(self.id)
 
     @staticmethod
-    def get_two_level_comments(parent_id, page=1, size=5):
+    def get_two_level_comments(parent_id, page=1, size=None):
         """
         :param parent_id: 一级评论的id
         :param page:   int 第几页
@@ -71,9 +71,8 @@ class Comment(models.Model):
         :return: [Comment]
         """
         page = page if isinstance(page, int) else 1
-        size = size if isinstance(size, int) else 5
+        size = size if isinstance(size, int) else None
         page = page if page >= 1 else 1
-        size = size if size >= 1 else 5
         return Comment.objects.select_related('at').values(
             "id", "nick", "content", "email", "create_date", "at__nick"
         ).filter(parent=parent_id).all().order_by('create_date')[(page - 1):size]
