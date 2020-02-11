@@ -11,7 +11,7 @@ $(document).ready(function(){
                     var comment = `<div class="media text-muted pt-3 " id="${data.data.id}">
                       <img src="${data.data.avatar}" class="mr-3" alt="...">
                       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                        <div class="small">
+                        <div>
                           <span class="text-primary">${data.data.nick}:</span>
                           <strong class="text-gray-dark">${data.data.content}</strong>
                         </div>
@@ -55,8 +55,8 @@ $(document).ready(function(){
                                 d.reply.map(function(r){
                                     var reply = `<div class="media text-muted pt-3" id="${r.id}">
                                       <img src="${r.avatar}" alt="..." class="mr-3">
-                                      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                          <div class="small">
+                                      <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+                                          <div>
                                                   <span class="text-primary">${r.nick}</span>
                                                   <span>回复</span> <span class="text-primary">${r.at__nick}</span>:
                                                   <strong class="text-gray-dark">${r.content}</strong>
@@ -72,7 +72,7 @@ $(document).ready(function(){
                                 var comment = `<div class="media text-muted pt-3" id="${d.id}">
                                               <img src="${d.avatar}" alt="..." class="mr-3">
                                               <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                                              <div class="small">
+                                              <div>
                                                   <span class="text-primary">${d.nick}: </span>
                                                   <strong class="text-gray-dark">${d.content}</strong>
                                               </div>
@@ -126,7 +126,7 @@ $(document).ready(function(){
                     var comment = `<div class="media text-muted pt-3" id="${data.data.id}">
                       <img src="${data.data.avatar}" class="mr-3" alt="...">
                       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                        <div class="small">
+                        <div>
                           <span class="text-primary">${data.data.nick}: </span>
                           <strong class="text-gray-dark">${data.data.content}</strong>
                         </div>
