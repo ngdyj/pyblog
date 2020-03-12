@@ -52,7 +52,7 @@ def human_date(d: datetime) -> str:
         if d.month == now.month and d.day == now.day:
             return "{0} hours ago".format(d.hour)
         elif d.month == now.month:
-            return "{0} days ago".format(now.day - d.year)
+            return "{0} days ago".format(now.day - d.day)
         else:
             return "{0} month ago".format(now.month - d.month)
     elif now.year - d.year >= 2:
