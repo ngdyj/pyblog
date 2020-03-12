@@ -10,6 +10,7 @@ class ArticleAdmin(admin.ModelAdmin):
     # https://timonweb.com/posts/override-field-widget-in-django-admin-form/
     form = ArticleAdminForm
     list_display = ('title', 'pub_date')
+    ordering = ('-pub_date',)
 
 
 @admin.register(Tag)
