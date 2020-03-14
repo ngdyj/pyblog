@@ -84,7 +84,7 @@ class Comment(models.Model):
 
 class Info(models.Model):
     id = models.AutoField('ID', primary_key=True)
-    title = models.CharField('标题', max_length=255)
+    title = models.CharField('标题', max_length=255, unique=True)
     content = models.TextField('内容')
     pub_date = models.DateTimeField(verbose_name="发布日期", auto_now_add=True)
     mod_date = models.DateTimeField(verbose_name="更新日期", auto_now=True)
