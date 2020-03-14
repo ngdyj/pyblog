@@ -25,3 +25,6 @@ urlpatterns = [
     path('comment/<uuid:slug>/', views.Comment.as_view(), name='comment'),
     path('tag/<str:name>/', views.Tag.as_view(), name='tag'),
 ]
+
+handler404 = views.handler404
+

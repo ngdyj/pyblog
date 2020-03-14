@@ -8,10 +8,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.core import serializers
 from datetime import datetime
+from django.shortcuts import render
 
 
-def index(request):
-    return render(request, 'index.html')
+def handler404(request, exception=None):
+    return render(request, '404.html', {}, status=404)
 
 
 class Index(generic.ListView):
