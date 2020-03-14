@@ -233,4 +233,18 @@ class Tag(generic.ListView):
         return content
 
 
+class AboutMe(generic.DetailView):
+    template_name = 'about.html'
+    context_object_name = 'about_me'
+    model = models.Info
+    queryset = model.objects.all()
+
+    # 重写该函数,可以不指定slug
+    def get_object(self, queryset=None):
+        try:
+            about_me = self.model.objects.get(title='about')
+        except models.Info.DoesNotExist:
+            return models.Info(content="""###博主太懒,没有自我介绍
+            """)
+        return about_me
 

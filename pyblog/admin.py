@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import (Article, Tag, Category, Comment,)
+from .models import (Article, Tag, Category, Comment, Info)
 from django.db import models
 from editormd.widget import TextInputMarkdown
-from .form import ArticleAdminForm
+from .form import ArticleAdminForm, InfoAdminForm
 
 
 @admin.register(Article)
@@ -27,5 +27,12 @@ class CategoryAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'email', 'nick', 'content', 'parent', 'at')
     list_per_page = 20  # 每页几条数据
+
+
+@admin.register(Info)
+class InfoAdmin(admin.ModelAdmin):
+    form = InfoAdminForm
+    list_display = ('title', 'pub_date')
+    ordering = ('-pub_date',)
 
 

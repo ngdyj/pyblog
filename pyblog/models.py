@@ -82,5 +82,19 @@ class Comment(models.Model):
         verbose_name_plural = '评论'
 
 
+class Info(models.Model):
+    id = models.AutoField('ID', primary_key=True)
+    title = models.CharField('标题', max_length=255)
+    content = models.TextField('内容')
+    pub_date = models.DateTimeField(verbose_name="发布日期", auto_now_add=True)
+    mod_date = models.DateTimeField(verbose_name="更新日期", auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = '网站信息'
+        verbose_name_plural = '网站信息'
+
 
 
