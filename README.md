@@ -48,7 +48,7 @@
 ```
 python manage.py runserver
 ```
-### 浏览器访问 127.0.0.1:8000
+浏览器访问 127.0.0.1:8000即可看到效果
 
 ## 服务器部署
 > nginx + uwsgi + virtualenv
