@@ -8,16 +8,15 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-blog" aria-controls="navbars-blog" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse " id="navbars-blog">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item {% if request.path == '/' %}active{% endif %}">
           <a class="nav-link" href="/">首页<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {% if request.path == '/archive' %}active{% endif %}">
           <a class="nav-link" href="{% url 'archive' %}">归档</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {% if request.path == '/about' %}active{% endif %}">
           <a class="nav-link" href="#">关于我</a>
         </li>
         <li class="nav-item">
