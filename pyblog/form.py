@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import Article
+from .models import Article, Info
 from editormd.widget import TextInputMarkdown
 
 
@@ -23,7 +23,7 @@ class CommentForm(forms.Form):
 
 class InfoAdminForm(ModelForm):
     class Meta:
-        model = Article
+        model = Info
         fields = '__all__'
         widgets = {
             'content': TextInputMarkdown(),

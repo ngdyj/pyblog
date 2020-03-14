@@ -244,7 +244,22 @@ class AboutMe(generic.DetailView):
         try:
             about_me = self.model.objects.get(title='about')
         except models.Info.DoesNotExist:
-            return models.Info(content="""###博主太懒,没有自我介绍
+            return models.Info(content="""*博主太懒,没有自我介绍*
             """)
         return about_me
 
+
+class Coffee(generic.DetailView):
+    template_name = 'coffee.html'
+    context_object_name = 'coffee'
+    model = models.Info
+    queryset = model.objects.all()
+
+    # 重写该函数,可以不指定slug
+    def get_object(self, queryset=None):
+        try:
+            coffee = self.model.objects.get(title='coffee')
+        except models.Info.DoesNotExist:
+            return models.Info(content="""*欢迎访问我的网站 ^_^*
+            """)
+        return coffee

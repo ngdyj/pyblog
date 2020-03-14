@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load markdown %}
+
+{% block content %}
+<div class="container" style="margin-top:20px;">
+    <div class="article-content markdown-body blog-post-body">
+        <p>{{coffee.content|markdown|safe }}</p>
+  </div>
+</div>
+{% endblock %}
