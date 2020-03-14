@@ -3,12 +3,10 @@ from django.views import generic
 from django.db.models import Count, Q
 from .settings import PAGESIZE
 from . import models, mixin, form
-from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.core import serializers
 from datetime import datetime
-from django.shortcuts import render
+from pyblog .templatetags.pyblog import gravatar
 
 
 def handler404(request, exception=None):
@@ -50,7 +48,8 @@ class ArticleDetail(generic.DetailView):
 
     def get_queryset(self):
         query = super().get_queryset()
-        return query.annotate(num_comment=Count('comments', filter=Q(comments__parent__isnull=True))).filter(is_pub=True)
+        return query.annotate(num_comment=Count('comments',
+                                                filter=Q(comments__parent__isnull=True))).filter(is_pub=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -63,7 +62,6 @@ class ArticleDetail(generic.DetailView):
         self.object queryset查询到的结果对象
         :return:
         """
-        from django.core.paginator import Paginator
         from django.db.models import Count
         comments = {"count": 0, "data": []}
         comment_count = self.object.comments.filter(parent__isnull=True).aggregate(Count('id')).get("id__count", 0)
@@ -145,7 +143,8 @@ class Comment(mixin.JSONResponseMixin, generic.TemplateView):
             return self.render_to_response(context=context)
         article = models.Article(id=kwargs.get('slug'))
         # https://docs.djangoproject.com/en/3.0/topics/pagination/
-        paginator = Paginator(article.comments.filter(article_id=article_id, parent__isnull=True).all().order_by('create_date'), int(size))
+        paginator = Paginator(article.comments.filter(article_id=article_id,
+                                                      parent__isnull=True).all().order_by('create_date'), int(size))
 
         comments = paginator.get_page(int(page_count - page))
         if not comments:
@@ -234,8 +233,4 @@ class Tag(generic.ListView):
         return content
 
 
-def gravatar(email, size=32):
-    import hashlib
-    from .settings import AVATAR_DOMAIN
-    return "%s/avatar/%s?s=%s&d=retro" % (AVATAR_DOMAIN,
-                                          hashlib.md5(email.lower().encode()).hexdigest(), str(size))
+
