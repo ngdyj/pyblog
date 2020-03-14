@@ -134,7 +134,7 @@ python manage.py runserver
 	uwsgi  --yml uwsgi.yml
 	```
 
-- 访问您的nginx配置域名即可
+- 访问您的nginx配置域名即可看到效果
 
 
 ## 扩展配置
@@ -167,4 +167,29 @@ python manage.py runserver
 	# systemctl disable pyblog.uwsgi  //关闭开机启动
 	# systemctl restart pyblog.uwsgi  //重启pyblog服务 
 	# systemctl stop pyblog.uwsgi     //关闭pyblog服务
+	```
+### 定时备份数据库上传至腾讯云对象存储
+> 相关文档，上腾讯云官网了解一下  
+> 备注: 该脚本备份的文件默认在.backup文件夹中  
+> 备份策略: 上传(会先压缩)到腾讯云之前，会与本地备份的文件比较,如果相同，且已上传，本次备份将停止上传至腾讯云，只保存在本地。
+- 复制脚本
+	```
+	cp backup-db.example.py backup-db.py
+	```
+- 修改backup-db.py配置项:
+	```
+	# tencent settings
+	secret_id = '替换为你自己的secret_id'
+	secret_key = '替换为你自己的secret_key'
+	region = 'ap-shanghai(根据情况替换)'
+	bucket = '替换为你自己的桶名'
+	...
+	# mysql settings
+	mysql_user = 'pyblog'
+	mysql_password = '123456'
+	mysql_backup_db_name = 'pyblog'
+	```
+- 每天凌晨1点自动备份一次数据库
+	```
+	00 01 * * * /home/ubuntu/.github/pyblog/.venv/bin/python /home/ubuntu/.github/pyblog/backup-db.py
 	```
