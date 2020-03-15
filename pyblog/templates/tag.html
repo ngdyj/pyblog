@@ -2,22 +2,24 @@
 {% load pyblog %}
 
 {% block content %}
-<div class="jumbotron d-sm-block d-none" style="text-align:center;">
-    <div class="container">
-        You are welcome
-    </div>
-</div>
-
 <div class="container">
     <div class="row">
-        <div class="col-md-10 shadow-sm p-3 mb-5 bg-white rounded">
+        <div class="col-md-8 blog-list px-3 py-5 p-md-5 overflow-hidden">
             {% for article in articles %}
-                <div class="border-bottom">
-                    <a href="{% url 'detail' slug=article.id %}" class="text-decoration-none">
-                            <h4>{{ article.title}}</h4>
-                    </a>
-                    <span class="text-muted">{{article.pub_date|date:"Y/m/d H:i"}}</span>
-                    <p>{{article.content|truncatechars:100}}</p>
+                <div class="item mb-5">
+                    <div class="media">
+                        <div class="media-body">
+                            <h3 class="title mb-1"><a href="{% url 'detail' slug=article.id %}">{{ article.title}}</a></h3>
+                            <div class="meta mb-1">
+                                <span class="date">{{article.pub_date|date:"Y/m/d H:i"}}</span>
+                                <span class="time">{{article.content|get_read_time}} min read</span>
+                                <span class="comment"><a href="#">{{article.num_comment}} comments</a></span>
+                                <span><a href="{{request.path}}?category={{article.category.name}}" title="{{article.category.name}}" class="text-decoration-none" style="color:#17a2b8">{{article.category.name}}</a> </span>
+                            </div>
+                            <div class="intro">{{article.content|truncatechars:200}}</div>
+                            <a class="more-link" href="{% url 'detail' slug=article.id %}">Read more →</a>
+                        </div>
+                    </div>
                 </div>
             {% empty %}
                 <div class="border-bottom">
