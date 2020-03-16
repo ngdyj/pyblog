@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
 {% load markdown %}
 {% load pyblog %}
-<!--文章详情页-->
 
+{% block extend_head %}
+    <title>{{article.title}}</title>
+    <meta name="keywords" content="{{ article.tags.all|join:',' }}">
+{% endblock %}
+<!--文章详情页-->
 {% block content %}
 <div class="container">
-<!--  <nav aria-label="breadcrumb">-->
-<!--    <ol class="breadcrumb">-->
-<!--      <li class="breadcrumb-item"><a href="#">Home</a></li>-->
-<!--      <li class="breadcrumb-item"><a href="#">Library</a></li>-->
-<!--      <li class="breadcrumb-item active" aria-current="page">Data</li>-->
-<!--    </ol>-->
-<!--  </nav>-->
   <div class="row" style="margin-top:20px">
     <div class="col-md-9">
       <header class="blog-post-header">

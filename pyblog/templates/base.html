@@ -27,8 +27,9 @@
       <link href="https://cdn.bootcss.com/github-markdown-css/3.0.1/github-markdown.min.css" rel="stylesheet">
     {% endif %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-
-    <title>向着太阳奋斗</title>
+    {% block extend_head %}
+      <title>向着太阳奋斗</title>
+    {% endblock %}
   </head>
   <body class="d-flex flex-column h-100 vsc-initialized">
   {% include 'common/header.html' %}
