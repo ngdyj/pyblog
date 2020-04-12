@@ -91,7 +91,7 @@ class Info(models.Model):
     id = models.AutoField('ID', primary_key=True)
     is_pub = models.BooleanField('是否发布', null=False, blank=False, default=True)
     title = models.CharField('标题', max_length=255)
-    i_type = models.IntegerField('类型', choices=INFO_TYPE_CHOICES, unique=True)
+    i_type = models.IntegerField('类型', choices=INFO_TYPE_CHOICES, unique=True, blank=True, null=True)
     content = models.TextField('内容')
     pub_date = models.DateTimeField(verbose_name="发布日期", auto_now_add=True)
     mod_date = models.DateTimeField(verbose_name="更新日期", auto_now=True)
