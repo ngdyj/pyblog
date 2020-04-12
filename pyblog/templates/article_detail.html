@@ -9,7 +9,7 @@
 <!--文章详情页-->
 {% block content %}
 <div class="container">
-  <div class="row" style="margin-top:20px">
+  <div class="row">
     <div class="col-md-9">
       <header class="blog-post-header">
         <h2 class="title mb-2">{{article.title}}</h2>
@@ -30,10 +30,6 @@
         <p>{{article.content|markdown|safe }}</p>
       </div>
       {% include 'comment.html' %}
-    </div>
-
-    <div class="col-md-3 navigation-bar">
-
     </div>
   </div>
 </div>
