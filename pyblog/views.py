@@ -237,12 +237,12 @@ class AboutMe(generic.DetailView):
     template_name = 'about.html'
     context_object_name = 'about_me'
     model = models.Info
-    queryset = model.objects.all()
+    # queryset = model.objects.all()
 
     # 重写该函数,可以不指定slug
     def get_object(self, queryset=None):
         try:
-            about_me = self.model.objects.get(title='about')
+            about_me = self.model.objects.get(i_type=self.model.INFO_TYPE_CHOICES[0][0], is_pub=True)
         except models.Info.DoesNotExist:
             return models.Info(content="""*博主太懒,没有自我介绍*
             """)
@@ -253,12 +253,11 @@ class Coffee(generic.DetailView):
     template_name = 'coffee.html'
     context_object_name = 'coffee'
     model = models.Info
-    queryset = model.objects.all()
 
     # 重写该函数,可以不指定slug
     def get_object(self, queryset=None):
         try:
-            coffee = self.model.objects.get(title='coffee')
+            coffee = self.model.objects.get(i_type=self.model.INFO_TYPE_CHOICES[1][0], is_pub=True)
         except models.Info.DoesNotExist:
             return models.Info(content="""*欢迎访问我的网站 ^_^*
             """)

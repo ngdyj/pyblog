@@ -28,7 +28,7 @@ class Category(models.Model):
 
 class Article(models.Model):
     id = models.UUIDField("ID", primary_key=True, default=uuid.uuid4, editable=False)
-    is_pub = models.BooleanField('是否发布', null=False, blank=False)
+    is_pub = models.BooleanField('是否发布', null=False, blank=False, default=True)
     title = models.CharField('文章标题', max_length=255)
     content = models.TextField('内容')
     tags = models.ManyToManyField(Tag)
@@ -83,8 +83,15 @@ class Comment(models.Model):
 
 
 class Info(models.Model):
+
+    INFO_TYPE_CHOICES = [
+        (0, "关于我"),
+        (1, "咖啡")
+    ]
     id = models.AutoField('ID', primary_key=True)
-    title = models.CharField('标题', max_length=255, unique=True)
+    is_pub = models.BooleanField('是否发布', null=False, blank=False, default=True)
+    title = models.CharField('标题', max_length=255)
+    i_type = models.IntegerField('类型', choices=INFO_TYPE_CHOICES, unique=True)
     content = models.TextField('内容')
     pub_date = models.DateTimeField(verbose_name="发布日期", auto_now_add=True)
     mod_date = models.DateTimeField(verbose_name="更新日期", auto_now=True)
@@ -93,6 +100,7 @@ class Info(models.Model):
         return self.title
 
     class Meta:
+        # https://docs.djangoproject.com/en/3.0/ref/models/options/
         verbose_name = '网站信息'
         verbose_name_plural = '网站信息'
 
