@@ -11,16 +11,16 @@
     <div class="collapse navbar-collapse " id="navbars-blog">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item {% if request.path == '/' %}active{% endif %}">
-          <a class="nav-link" href="/">首页<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/"><i class="fas fa-home mr-1"></i>首页<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item {% if request.path == '/archive' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'archive' %}">归档</a>
+          <a class="nav-link" href="{% url 'archive' %}"><i class="fas fa-archive mr-1"></i>归档</a>
         </li>
         <li class="nav-item {% if request.path == '/about' %}active{% endif %}">
-          <a class="nav-link" href="/about">关于我</a>
+          <a class="nav-link" href="/about"><i class="fas fa-id-card mr-1"></i>关于我</a>
         </li>
         <li class="nav-item  {% if request.path == '/coffee' %}active{% endif %}">
-          <a class="nav-link" href="/coffee">咖啡</a>
+          <a class="nav-link" href="/coffee"><i class="fas fa-coffee mr-1"></i>咖啡</a>
         </li>
 
       </ul>
