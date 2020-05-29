@@ -1,3 +1,5 @@
+from abc import ABC
+
 from django.contrib import admin
 from .models import (Article, Tag, Comment, Info)
 from django.db import models
@@ -20,8 +22,31 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email', 'nick', 'content', 'parent', 'at')
+    class CommentInline(admin.TabularInline):
+        model = Comment
+        fk_name = "parent"
+        extra = 0
+        ordering = ('create_date',)
+        # readonly_fields = ('article', 'at')
+        # fields = ['id', 'nick', 'email',  'content', 'article']
+
+    class CommentFilter(admin.SimpleListFilter, ABC):
+        title = "一级评论"
+        parameter_name = "..."
+
+        def lookups(self, request, model_admin):
+            return [
+                ('email', 'nick'),
+            ]
+
+        def queryset(self, request, queryset):
+            return queryset.distinct().filter(parent=None)
+
+    list_display = ('id', 'email', 'nick', 'content', 'article')
     list_per_page = 20  # 每页几条数据
+    inlines = [CommentInline]
+    list_filter = (CommentFilter,)
+    exclude = ["parent", "at"]
 
 
 @admin.register(Info)
