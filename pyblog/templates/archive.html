@@ -18,11 +18,11 @@
 <script>
     $(document).ready(function(){
         $(".collapse").on('show.bs.collapse', function(){
-            $(this).parent().find(".fas").addClass("fa-angle-down");
-        	$(this).parent().find(".fas").removeClass("fa-angle-right");
+            $(this).prev().find(".fas").addClass("fa-angle-down");
+        	$(this).prev().find(".fas").removeClass("fa-angle-right");
         }).on('hide.bs.collapse', function(){
-            $(this).parent().find(".fas").addClass("fa-angle-right");
-        	$(this).parent().find(".fas").removeClass("fa-angle-down");
+            $(this).prev().find(".fas").addClass("fa-angle-right");
+        	$(this).prev().find(".fas").removeClass("fa-angle-down");
         });
     });
 </script>
