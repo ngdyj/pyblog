@@ -117,7 +117,7 @@ a {
 
 
 .header {
-    background: #077CBC;
+    background: #343a40;
     height: 200px;
 }
 
@@ -134,7 +134,7 @@ a {
 }
 
 #menu {
-    background-color: #077CBC !important;
+    background-color: #343a40 !important;
 }
 
 #menu li a {
