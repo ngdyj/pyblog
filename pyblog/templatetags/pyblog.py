@@ -1,5 +1,5 @@
 from django import template
-from ..models import Category, Tag, Article
+from ..models import Tag, Article
 from ..settings import AVATAR_DOMAIN
 from datetime import datetime
 import hashlib
@@ -7,12 +7,6 @@ import re
 import math
 
 register = template.Library()
-
-
-# 返回所以分类
-@register.simple_tag()
-def categories():
-    return Category.objects.all()
 
 
 @register.simple_tag()

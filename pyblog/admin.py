@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (Article, Tag, Category, Comment, Info)
+from .models import (Article, Tag, Comment, Info)
 from django.db import models
 from editormd.widget import TextInputMarkdown
 from .form import ArticleAdminForm, InfoAdminForm
@@ -15,11 +15,6 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
     pass
 
 

@@ -14,7 +14,6 @@
                                 <span class="date">{{article.pub_date|date:"Y/m/d H:i"}}</span>
                                 <span class="time">{{article.content|get_read_time}} min read</span>
                                 <span class="comment"><a href="#">{{article.num_comment}} comments</a></span>
-                                <span><a href="{{request.path}}?category={{article.category.name}}" title="{{article.category.name}}" class="text-decoration-none" style="color:#17a2b8">{{article.category.name}}</a> </span>
                             </div>
                             <div class="intro">{{article.content|truncatechars:200}}</div>
                             <a class="more-link" href="{% url 'detail' slug=article.id %}">Read more →</a>

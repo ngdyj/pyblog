@@ -20,20 +20,9 @@ class Index(generic.ListView):
     paginate_by = PAGESIZE
 
     def get_queryset(self):
-        if "category" in self.request.GET:
-            category = self.request.GET['category']
-
-            """
-            Count('comments') 统计有几条评论(仅统计一级评论数量),并写入自定义字段num_comment中
-            """
-            content = models.Article.objects.\
-                select_related('category').annotate(
-                 num_comment=Count('comments', filter=Q(comments__parent__isnull=True))).\
-                filter(is_pub=True, category__name=category).all().order_by('-pub_date')
-        else:
-            content = models.Article.objects.\
-                annotate(num_comment=Count('comments', filter=Q(comments__parent__isnull=True))).\
-                filter(is_pub=True).all().order_by('-pub_date')
+        content = models.Article.objects.annotate(
+             num_comment=Count('comments', filter=Q(comments__parent__isnull=True))). \
+            filter(is_pub=True).all().order_by('-pub_date')
         return content
 
     def get(self, request, *args, **kwargs):
