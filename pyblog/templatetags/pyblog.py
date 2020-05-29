@@ -16,7 +16,7 @@ def tags():
 
 @register.simple_tag()
 def tops():
-    return Article.objects.all()[:5]
+    return Article.objects.all().filter(is_top=True).order_by('-sort_weight')[:10]
 
 
 # 根据Email生成头像地址
