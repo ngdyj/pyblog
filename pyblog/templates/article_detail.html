@@ -20,9 +20,9 @@
         </div>
       </header>
       <div class="tag">
-        <span class="badge">标签:</span>
+        <i class="fas fa-tags mr-1 text-secondary"></i>
         {% for tag in article.tags.all %}
-          <span class="badge badge-info">{{tag}}</span>
+          <a href="{% url 'tag' name=tag.name %}" rel="tag" title="标签: {{tag}}" class="tag-item">{{tag}}</a>
         {% endfor %}
       </div>
 
