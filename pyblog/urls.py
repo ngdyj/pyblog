@@ -20,9 +20,9 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Index.as_view(), name='index'),
-    path('p/<uuid:slug>/', views.ArticleDetail.as_view(), name='detail'),
+    path('post/<uuid:slug>/', views.ArticleDetail.as_view(), name='detail'),
+    path('post/<uuid:slug>/comments/', views.Comment.as_view(), name='comment'),
     path('archive', views.Archive.as_view(), name='archive'),
-    path('comment/<uuid:slug>/', views.Comment.as_view(), name='comment'),
     path('tag/<str:name>/', views.Tag.as_view(), name='tag'),
     path('about', views.AboutMe.as_view(), name='about'),
     path('coffee', views.Coffee.as_view(), name='coffee'),

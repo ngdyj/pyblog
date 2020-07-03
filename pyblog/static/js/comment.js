@@ -4,7 +4,7 @@ $(document).ready(function(){
             var article_uuid = $('#article-uuid').text()
             $.ajax({
                 type: "POST",
-                url: `/comment/${article_uuid}/`,
+                url: `/post/${article_uuid}/comments/`,
                 data: $("#comment-form").serialize(),
                 success: function(data, status,jqXHR){
                     if (data.code == 0){ //评论成功
@@ -43,7 +43,7 @@ $(document).ready(function(){
                 if (has_next_page) {
                     $.ajax({
                     type: 'get',
-                    url: `/comment/${article_uuid}/?page=${next_page}&size=${page_size}&count=${comment_count}`,
+                    url: `/post/${article_uuid}/comments/?page=${next_page}&size=${page_size}&count=${comment_count}`,
                     success: function(data, status) {
                         if (data.code == 0) {
                             has_next_page = data.data.has_next;
@@ -123,7 +123,7 @@ $(document).ready(function(){
             var article_uuid = $('#article-uuid').text()
             $.ajax({
                 type: "POST",
-                url: `/comment/${article_uuid}/`,
+                url: `/post/${article_uuid}/comments/`,
                 data: $("#comment-reply-form").serialize(),
                 success: function(data, status,jqXHR){
                     if (data.code == 0){ //评论成功
