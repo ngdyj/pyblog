@@ -65,7 +65,7 @@
 }
 
 .blog-list .item .intro {
-    font-size: 0.875rem
+    font-size: 1.25rem
 }
 
 .blog-list .item .more-link {
@@ -106,9 +106,6 @@
     display: none
 }
 
-.blog-list .item .intro {
-    font-size: 0.875rem;
-}
 a {
     color: #3B7EEB;
     text-decoration: none;

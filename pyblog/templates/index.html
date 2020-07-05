@@ -9,14 +9,15 @@
                 <div class="item mb-5">
                         <div class="media">
                             <div class="media-body">
-                                <h2 class="title mb-1"><a href="{% url 'detail' slug=article.id %}">{{ article.title}}</a></h2>
+                                <h2 class="title mb-1"><a href="{% url 'detail' slug=article.id %}" class="text-decoration-none text-danger">{{ article.title}}</a></h2>
                                 <div class="meta mb-1">
                                     <span class="date">{{article.pub_date|date:"Y/m/d H:i"}}</span>
                                     <span class="time">{{article.content|get_read_time}} min read</span>
                                     <span class="comment">{{article.num_comment}} comments</span>
                                 </div>
-                                <div class="intro">{{article.content|truncatechars:200}}</div>
-                                <a class="more-link" href="{% url 'detail' slug=article.id %}">Read more →</a>
+                                <a class="more-link text-truncate-none text-decoration-none text-muted" href="{% url 'detail' slug=article.id %}">
+                                    <div class="intro">{{article.content|truncatechars:200}}</div>
+                                </a>
                             </div><!--//media-body-->
                         </div><!--//media-->
                 </div>
