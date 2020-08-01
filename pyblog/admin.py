@@ -1,9 +1,6 @@
 from abc import ABC
-
 from django.contrib import admin
 from .models import (Article, Tag, Comment, Info)
-from django.db import models
-from editormd.widget import TextInputMarkdown
 from .form import ArticleAdminForm, InfoAdminForm
 
 
@@ -11,7 +8,8 @@ from .form import ArticleAdminForm, InfoAdminForm
 class ArticleAdmin(admin.ModelAdmin):
     # https://timonweb.com/posts/override-field-widget-in-django-admin-form/
     form = ArticleAdminForm
-    list_display = ('title', 'pub_date')
+    list_display = ('title', 'is_pub', 'pub_date')
+    search_fields = ('title',)
     ordering = ('-pub_date',)
 
 
@@ -54,5 +52,3 @@ class InfoAdmin(admin.ModelAdmin):
     form = InfoAdminForm
     list_display = ('title', 'pub_date')
     ordering = ('-pub_date',)
-
-
