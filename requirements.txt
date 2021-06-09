@@ -3,7 +3,7 @@ certifi==2019.11.28
 chardet==3.0.4
 cos-python-sdk-v5==1.7.7
 dicttoxml==1.7.4
-Django==3.1.9
+Django==3.1.10
 idna==2.9
 mistune==0.8.4
 mysqlclient==1.4.4
